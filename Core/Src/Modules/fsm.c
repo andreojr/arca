@@ -204,6 +204,9 @@ void Controller_Run(Controller_Context *ctx)
             {
                 _set_state(ctx, STATE_EXPORTAR_LOGS);
             }
+            else {
+                _uart_send(ctx, "CMD:INVALIDO\n");
+            }
 
             ctx->uart_line_ready = 0;
             ctx->uart_line_len = 0;
@@ -273,7 +276,9 @@ void Controller_Run(Controller_Context *ctx)
 
         case STATE_CADASTRO_CONFIRMA_PC:
             _set_state(ctx, STATE_MENU_PC);
+            ctx->uart_line_ready = 1u;
             break;
+        }
 
         case STATE_DELETAR_AGUARDA_NFC:
             _handle_aguarda_nfc(ctx, STATE_DELETAR_PROCESSA, "DELETAR:CANCELADO\n");
